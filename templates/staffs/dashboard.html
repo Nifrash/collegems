@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Staff Summary Dashboard</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-primary text-white">
+            <div class="card-body">
+                <h6>Students</h6>
+                <h3>{{ total_students }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-success text-white">
+            <div class="card-body">
+                <h6>Lecturers</h6>
+                <h3>{{ total_lecturers }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-warning text-dark">
+            <div class="card-body">
+                <h6>Courses</h6>
+                <h3>{{ total_courses }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-info text-dark">
+            <div class="card-body">
+                <h6>Enrollments</h6>
+                <h3>{{ total_enrollments }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-dark text-white">
+            <div class="card-body">
+                <h6>Payments</h6>
+                <h3>{{ total_payments }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+        <div class="card summary-card shadow-sm bg-secondary text-white">
+            <div class="card-body">
+                <h6>Total Amount</h6>
+                <h5>{{ total_payment_amount }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-6">
+        <div class="card table-card shadow-sm">
+            <div class="card-header bg-white">
+                <strong>Quick Actions</strong>
+            </div>
+            <div class="card-body d-grid gap-2">
+                <a href="{% url 'register_student' %}" class="btn btn-primary">Register Student</a>
+                <a href="{% url 'register_lecturer' %}" class="btn btn-success">Register Lecturer</a>
+                <a href="{% url 'register_course' %}" class="btn btn-warning">Register Course</a>
+                <a href="{% url 'course_list' %}" class="btn btn-info">Assign Course to Lecturer</a>
+                <a href="{% url 'enroll_student' %}" class="btn btn-secondary">Enroll Student in Course</a>
+                <a href="{% url 'add_payment' %}" class="btn btn-dark">Add Payment</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card table-card shadow-sm mb-3">
+            <div class="card-header bg-white">
+                <strong>Recent Students</strong>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for student in recent_students %}
+                        <li class="list-group-item">
+                            {{ student.student_id }} - {{ student.user.get_full_name|default:student.user.username }}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No students found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="card table-card shadow-sm">
+            <div class="card-header bg-white">
+                <strong>Recent Payments</strong>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for payment in recent_payments %}
+                        <li class="list-group-item">
+                            {{ payment.student.student_id }} - {{ payment.amount }} - {{ payment.status }}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No payments found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

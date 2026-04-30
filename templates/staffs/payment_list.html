@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Payments{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Payment List</h4>
+        <a href="{% url 'add_payment' %}" class="btn btn-primary btn-sm">Add Payment</a>
+    </div>
+    <div class="card-body">
+                    <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Student</th>
+                  <th>Course</th>
+                  <th>Course Fee</th>
+                  <th>Paid Amount</th>
+                  <th>Remaining Balance</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for payment in payments %}
+                <tr>
+                  <td>{{ payment.reference_no }}</td>
+                  <td>{{ payment.student }}</td>
+                  <td>{{ payment.course.course_name }}</td>
+                  <td>{{ payment.course.course_fee }}</td>
+                  <td>{{ payment.amount }}</td>
+                  <td>{{ payment.remaining_balance }}</td>
+                  <td>{{ payment.status }}</td>
+                  <td>{{ payment.payment_date }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    </div>
+</div>
+{% endblock %}

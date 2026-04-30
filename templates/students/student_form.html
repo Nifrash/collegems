@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            {{ title|default:"Student Profile" }}
+          </h4>
+        </div>
+
+        <div class="card-body">
+
+          <!-- IMPORTANT: enctype for file upload -->
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Display form errors -->
+            {% if form.errors %}
+              <div class="alert alert-danger">
+                Please fix the errors below.
+              </div>
+            {% endif %}
+
+            <!-- NIC -->
+            <div class="mb-3">
+              <label class="form-label">NIC Number</label>
+              {{ form.student_nic }}
+            </div>
+
+            <!-- DOB -->
+            <div class="mb-3">
+              <label class="form-label">Date of Birth</label>
+              {{ form.date_of_birth }}
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+              <label class="form-label">Gender</label>
+              {{ form.gender }}
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+              <label class="form-label">Address</label>
+              {{ form.address }}
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-3">
+              <label class="form-label">Student Photo</label>
+              {{ form.student_image }}
+
+              {% if form.instance.student_image %}
+                <div class="mt-2">
+                  <img src="{{ form.instance.student_image.url }}"
+                       class="img-thumbnail"
+                       width="150">
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- NIC Copy Upload -->
+            <div class="mb-3">
+              <label class="form-label">NIC Copy</label>
+              {{ form.nic_copy }}
+
+              {% if form.instance.nic_copy %}
+                <div class="mt-2">
+                  <a href="{{ form.instance.nic_copy.url }}"
+                     target="_blank"
+                     class="btn btn-sm btn-info">
+                    View Uploaded File
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">
+                Cancel
+              </a>
+
+              <button type="submit" class="btn btn-success">
+                Save Profile
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

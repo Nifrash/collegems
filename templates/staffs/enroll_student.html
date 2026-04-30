@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Enroll Student{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h4 class="mb-0">Enroll Student in Course</h4>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-secondary">Enroll Student</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
